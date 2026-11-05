@@ -144,7 +144,7 @@
   /* Theme list */
   .feature{display:grid;gap:22px;margin:28px 0 8px;padding:20px;background:var(--surface);border:1px solid var(--line-strong);border-radius:26px}
   .feature-art{border-radius:18px;overflow:hidden;aspect-ratio:360/210;background:var(--tint)}
-  .feature-art img{display:block;width:100%;height:100%;object-fit:cover}
+  .feature-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 12%}
   .feature h2{font-size:1.5rem;margin:0 0 8px}
   .feature p{color:var(--ink-2);margin:0 0 18px}
   @media (min-width:760px){.feature{grid-template-columns:minmax(0,320px) 1fr;align-items:center;padding:24px;gap:32px}}
@@ -154,7 +154,7 @@
   .theme-more{display:none;grid-column:1/-1;gap:14px;padding:6px 0 4px;justify-items:start}
   .theme.open .theme-more{display:grid;animation:screenIn .25s ease-out}
   .theme-art{width:min(320px,100%);aspect-ratio:360/210;border-radius:16px;overflow:hidden;background:var(--tint)}
-  .theme-art img{display:block;width:100%;height:100%;object-fit:cover}
+  .theme-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 12%}
   .theme:last-child{border-bottom:1px solid var(--line)}
   .theme:hover h2{color:var(--brand)}
   .theme h2{margin:0 0 3px;font-size:1.05rem;letter-spacing:-.01em}
@@ -178,9 +178,15 @@
     transition:border-color .16s,background .16s}
   .option:hover{border-color:var(--line-strong);background:#FDFBFE}
   .option .k{font-weight:700;font-size:.78rem;color:var(--ink-2);padding-top:2px}
-  .option[aria-pressed="true"]{border-color:var(--brand);background:var(--tint);border-color:var(--brand)}
+  .option[aria-pressed="true"]{border-color:var(--brand);background:var(--tint)}
+  .option.right{background:#EAF7EE;border-color:#7CC596}
+  .option.wrong{background:#FDECEC;border-color:#E39A9A}
   .option[aria-pressed="true"] .k{color:var(--brand)}
-  .feedback{margin-top:16px;padding-left:14px;border-left:3px solid var(--brand);font-size:.92rem;line-height:1.55}
+  .feedback{margin-top:16px;padding:12px 14px;border-left:3px solid var(--brand);border-radius:0 12px 12px 0;font-size:.92rem;line-height:1.55}
+  .feedback strong{display:block;margin-bottom:6px;font:800 .95rem Montserrat,sans-serif}
+  .feedback:focus{outline:none}
+  .feedback.right{border-color:#2F9E5B;background:#F1FAF4}.feedback.right strong{color:#1F7A44}
+  .feedback.wrong{border-color:#D45C5C;background:#FEF3F3}.feedback.wrong strong{color:#B33A3A}
   .feedback p{margin:0 0 8px}
   .feedback p:last-child{margin:0}
   .reflect{margin-top:32px;padding-top:22px;border-top:1px solid var(--line);max-width:var(--read);font-weight:600;font-size:1.05rem;line-height:1.5}
@@ -237,6 +243,17 @@
   .creator-card.mariana .creator-traits{color:#97573F}
   .creator-copy p:last-child{margin:0;color:var(--ink-2);font-size:.92rem;line-height:1.55}
   @media (min-width:700px){.creator-grid{grid-template-columns:1fr 1fr;gap:18px}}
+  #screen{position:relative}
+  .deco{position:absolute;pointer-events:none;z-index:0}
+  #screen > *{position:relative;z-index:1}
+  #screen > .deco{position:absolute;z-index:0}
+  .deco-stars{top:30px;right:0;width:84px;height:70px}
+  .deco-net{left:-10px;bottom:-24px;width:min(460px,70%);opacity:.55}
+  .reflect{position:relative}
+  .reflect::before{content:"";position:absolute;top:-11px;left:50%;width:44px;height:22px;transform:translateX(-50%);background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.5 4.2 12.9a4.6 4.6 0 0 1 6.5-6.5L12 7.7l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5Z' fill='%23F4A6B8'/%3E%3C/svg%3E") center/18px no-repeat}
+  .pager .btn:not(.ghost){position:relative;overflow:visible}
+  .pager .btn:not(.ghost)::after{content:"";position:absolute;top:-16px;right:-10px;width:22px;height:22px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1l2.2 6.8L21 10l-6.8 2.2L12 19l-2.2-6.8L3 10l6.8-2.2Z' fill='%23B887DD'/%3E%3C/svg%3E") center/contain no-repeat}
+  @media (max-width:640px){.deco-stars{top:34px;width:64px;height:54px}}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   @media (prefers-reduced-motion:reduce){
     *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
@@ -311,6 +328,7 @@ const paths = {
           ]}
         ],
         situation: {
+          correct: 1,
           title: "Quando alguém é diferente de você",
           text: "Durante uma atividade em grupo, uma pessoa apresenta uma ideia muito diferente da sua. Algumas pessoas começam a rir e fazem comentários sobre a proposta.",
           question: "Como você poderia contribuir para que essa situação fosse mais respeitosa?",
@@ -346,6 +364,7 @@ const paths = {
           ]}
         ],
         situation: {
+          correct: 1,
           title: "Quando alguém fica de fora",
           text: "Você percebe que uma pessoa da turma costuma ser deixada de fora das atividades. Algumas pessoas fazem comentários sobre ela e outras apenas observam.",
           question: "O que poderia contribuir para uma convivência mais respeitosa?",
@@ -396,6 +415,7 @@ const paths = {
           suggestion: "“Podemos conversar sobre o que aconteceu e pensar em como fazer de outra maneira?”"
         },
         situation: {
+          correct: 1,
           title: "Quando as opiniões são diferentes",
           text: "Durante um trabalho em grupo, uma colega apresenta uma ideia diferente da sua. Você acredita que sua proposta é melhor.",
           question: "Qual resposta pode ajudar a manter uma conversa respeitosa?",
@@ -442,6 +462,7 @@ const paths = {
           ]
         },
         situation: {
+          correct: 1,
           title: "Quando alguém precisa participar",
           text: "Durante uma atividade em grupo, um colega está tendo dificuldade para participar. Algumas pessoas começam a fazer tudo sem perguntar se ele gostaria de contribuir.",
           question: "Como o grupo poderia agir de forma mais cooperativa?",
@@ -485,6 +506,7 @@ const paths = {
           ]
         },
         situation: {
+          correct: 1,
           title: "Quem faz parte da nossa comunidade?",
           text: "Você percebe que algumas pessoas da escola realizam suas atividades diariamente, mas quase nunca são reconhecidas pelos estudantes.",
           question: "Como podemos demonstrar respeito e reconhecimento?",
@@ -539,6 +561,7 @@ const paths = {
           ]}
         ],
         situation: {
+          correct: 1,
           title: "Quando as perspectivas são diferentes",
           text: "Durante uma conversa entre profissionais, uma pessoa apresenta uma proposta diferente da sua. Algumas pessoas desconsideram a ideia antes de ouvi-la completamente.",
           question: "Como contribuir para uma relação mais respeitosa?",
@@ -573,6 +596,7 @@ const paths = {
           ]}
         ],
         situation: {
+          correct: 1,
           title: "Quando uma situação merece atenção",
           text: "Você percebe que um estudante está sendo frequentemente alvo de comentários depreciativos ou excluído de atividades.",
           question: "Qual atitude pode contribuir para que a situação seja tratada com responsabilidade?",
@@ -615,6 +639,7 @@ const paths = {
           suggestion: "“Podemos conversar sobre o que aconteceu e compartilhar nossas perspectivas para compreender melhor a situação?”"
         },
         situation: {
+          correct: 1,
           title: "Quando uma opinião é desconsiderada",
           text: "Durante uma conversa entre profissionais, uma pessoa tenta apresentar sua opinião, mas é interrompida repetidamente.",
           question: "Como podemos contribuir para uma comunicação mais respeitosa?",
@@ -649,6 +674,7 @@ const paths = {
           ]}
         ],
         situation: {
+          correct: 1,
           title: "Quando uma tarefa envolve diferentes pessoas",
           text: "Uma atividade depende da colaboração de profissionais de diferentes setores. As pessoas possuem rotinas e responsabilidades distintas.",
           question: "Como a cooperação pode contribuir para essa situação?",
@@ -683,6 +709,7 @@ const paths = {
           ]}
         ],
         situation: {
+          correct: 1,
           title: "Quando uma contribuição passa despercebida",
           text: "Um profissional realiza suas atividades diariamente, mas sua contribuição raramente é reconhecida pelos colegas ou pela comunidade escolar.",
           question: "Como podemos contribuir para que essa pessoa se sinta respeitada e reconhecida?",
@@ -871,12 +898,12 @@ function renderSituation(key, pillar){
       <p class="q">${s.question}</p>
       <ul class="options">
         ${s.options.map((opt, i) => `
-          <li><button class="option" type="button" aria-pressed="${chosen === i}" data-answer="${i}">
+          <li><button class="option${chosen === i ? (i === s.correct ? " right" : " wrong") : ""}" type="button" aria-pressed="${chosen === i}" data-answer="${i}">
             <span class="k">${letters[i]}</span><span>${esc(opt)}</span>
           </button></li>`).join("")}
       </ul>
       <div aria-live="polite">${chosen === undefined ? "" : `
-        <div class="feedback" tabindex="-1">${s.feedback.slice(0, 2).map(t => `<p>${t}</p>`).join("")}</div>`}
+        <div class="feedback ${chosen === s.correct ? "right" : "wrong"}" tabindex="-1"><strong>${chosen === s.correct ? "Atitude correta!" : "Atitude incorreta!"}</strong>${s.feedback.slice(0, 2).map(t => `<p>${t}</p>`).join("")}</div>`}
       </div>
     </div>`;
 }
@@ -1006,6 +1033,7 @@ function screenCreditos(){
           <span class="creator-kicker">Psicologia · Marketing humanizado</span><h2>Andy</h2>
           <p class="creator-traits">Games · Músicas · Conexões</p>
           <p>Sou apaixonada por entender pessoas e transformar realidades. Animes, séries, músicas e games fazem parte das histórias que me inspiram.</p>
+          <a class="creator-handle" href="https://www.instagram.com/starmorediaries/" target="_blank" rel="noopener">@starmorediaries</a>
         </div>
       </article>
       <article class="creator-card mariana">
@@ -1014,6 +1042,7 @@ function screenCreditos(){
           <span class="creator-kicker">Estudante de Psicologia</span><h2>Mariana</h2>
           <p class="creator-traits">Cultura pop · Livros · Música</p>
           <p>Gosto de animes, desenhos, filmes, jogos, livros e praia. As histórias e os sentimentos que conectam as pessoas sempre me inspiram.</p>
+          <a class="creator-handle" href="https://www.instagram.com/mary_studypsico/" target="_blank" rel="noopener">@mary_studypsico</a>
         </div>
       </article>
     </div>
@@ -1076,7 +1105,7 @@ function render(keep){
     html = screenHome();
   }
 
-  screen.innerHTML = html;
+  screen.innerHTML = html + (parts.length ? `<svg class="deco deco-stars" viewBox="0 0 96 80" aria-hidden="true"><path d="M60 8l4 12 12 4-12 4-4 12-4-12-12-4 12-4Z" fill="#B887DD"/><path d="M30 38l2.4 7 7 2.4-7 2.4-2.4 7-2.4-7-7-2.4 7-2.4Z" fill="#D9B241"/><path d="M80 44l2 5.4 5.4 2-5.4 2-2 5.4-2-5.4-5.4-2 5.4-2Z" fill="#ED78A3"/><circle cx="18" cy="14" r="1.8" fill="#B887DD"/><circle cx="88" cy="18" r="1.6" fill="#6A20A7"/></svg><svg class="deco deco-net" viewBox="0 0 460 260" aria-hidden="true" fill="none" stroke="#B9A6D6" stroke-width="1.2" stroke-dasharray="2 5" stroke-linecap="round"><path d="M20 210 110 150 200 190 300 120 420 170M110 150 140 60 240 30 300 120M200 190 190 240M140 60 60 80 20 210"/><g fill="#C9B8E4" stroke="none"><circle cx="20" cy="210" r="4"/><circle cx="110" cy="150" r="5"/><circle cx="200" cy="190" r="4"/><circle cx="300" cy="120" r="5"/><circle cx="420" cy="170" r="3.5"/><circle cx="140" cy="60" r="4"/><circle cx="240" cy="30" r="3.5"/><circle cx="60" cy="80" r="3"/><circle cx="190" cy="240" r="3"/></g></svg>` : "");
   bindScreen(parts);
   if (!keep) {
     screen.classList.remove("in");
