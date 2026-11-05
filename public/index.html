@@ -183,7 +183,8 @@
   .feedback p{margin:0 0 8px}
   .feedback p:last-child{margin:0}
   .reflect{margin-top:32px;padding-top:22px;border-top:1px solid var(--line);max-width:var(--read);font-weight:600;font-size:1.05rem;line-height:1.5}
-  .reflect p{margin:0 0 10px}
+  .reflect h2{font-size:1.1rem;margin:0 0 10px}
+  .reflect p{margin:0 0 10px;font-weight:600;font-size:1.05rem;line-height:1.5}
   .pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}
   .pager .spacer{flex:1}
 
@@ -218,6 +219,23 @@
   .closing .highlight{margin:22px 0;padding-left:16px;border-left:3px solid var(--brand);font-weight:700;line-height:1.45}
   .closing .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
   .closing .credit{margin:24px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:.8rem;color:var(--ink-2)}
+  .credits{max-width:900px}
+  .credits .eyebrow{display:inline-flex;align-items:center;gap:9px;font:700 .76rem Montserrat,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
+  .credits .eyebrow::before{content:"";width:22px;height:1px;background:currentColor}
+  .credits h1{margin:11px 0 10px;max-width:20ch}
+  .creator-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:24px}
+  .creator-card{overflow:hidden;display:grid;border:1px solid #E9E0ED;border-radius:22px;background:#fff;box-shadow:0 9px 26px rgba(59,7,100,.07)}
+  .creator-card.mariana{border-color:#EED8CA}
+  .creator-photo{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center 30%;background:#F5E5F7}
+  .creator-card.mariana .creator-photo{object-position:center 22%;background:#C88765}
+  .creator-copy{padding:20px 22px 24px}
+  .creator-kicker{display:block;margin-bottom:7px;color:var(--brand);font:700 .68rem/1.4 Montserrat,sans-serif;letter-spacing:.09em;text-transform:uppercase}
+  .creator-card.mariana .creator-kicker{color:#A95C3C}
+  .creator-copy h2{margin:0 0 8px;font:800 1.28rem Montserrat,sans-serif;letter-spacing:-.03em}
+  .creator-traits{margin:0 0 10px;color:#60456F;font:700 .72rem/1.5 Montserrat,sans-serif}
+  .creator-card.mariana .creator-traits{color:#97573F}
+  .creator-copy p:last-child{margin:0;color:var(--ink-2);font-size:.92rem;line-height:1.55}
+  @media (min-width:700px){.creator-grid{grid-template-columns:1fr 1fr;gap:18px}}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   @media (prefers-reduced-motion:reduce){
     *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
@@ -903,7 +921,7 @@ function screenPillar(key, n){
       </div>
       ${pillar.support ? `<div class="extra" style="background:var(--tint)"><h2>${pillar.support.title}</h2>${pillar.support.ps.slice(0, 2).map(t => `<p>${t}</p>`).join("")}</div>` : ""}
       ${renderSituation(key, pillar)}
-      <div class="reflect"><p>${pillar.reflection}</p></div>
+      <section class="reflect" aria-labelledby="refl-title"><h2 id="refl-title">Uma pergunta para você refletir</h2><p>${pillar.reflection}</p></section>
     </div>
     <div class="pager">
       ${prev}
@@ -972,6 +990,34 @@ function screenApoio(){
   <div class="pager" style="max-width:720px"><a class="btn ghost" href="#/quiz/devolutiva">← Voltar</a><span class="spacer"></span><a class="btn" href="#/fim">Continuar</a></div>`;
 }
 
+function screenCreditos(){
+  return `
+  <a class="back" href="#/fim">← Encerramento</a>
+  <section class="credits">
+    <span class="eyebrow">Por trás do site</span>
+    <h1>Prazer, somos Andy e Mariana.</h1>
+    <p class="lead">Criamos este espaço para compartilhar informação, acolhimento e caminhos para uma escola mais acolhedora.</p>
+    <div class="creator-grid">
+      <article class="creator-card">
+        <img class="creator-photo" src="assets/andy.webp" alt="Retrato de Andy, com cabelos cacheados acobreados e camiseta escura">
+        <div class="creator-copy">
+          <span class="creator-kicker">Psicologia · Marketing humanizado</span><h2>Andy</h2>
+          <p class="creator-traits">Games · Músicas · Conexões</p>
+          <p>Sou apaixonada por entender pessoas e transformar realidades. Animes, séries, músicas e games fazem parte das histórias que me inspiram.</p>
+        </div>
+      </article>
+      <article class="creator-card mariana">
+        <img class="creator-photo" src="assets/mariana.webp" alt="Retrato de Mariana, com cabelos cacheados escuros, óculos e brincos de pérola">
+        <div class="creator-copy">
+          <span class="creator-kicker">Estudante de Psicologia</span><h2>Mariana</h2>
+          <p class="creator-traits">Cultura pop · Livros · Música</p>
+          <p>Gosto de animes, desenhos, filmes, jogos, livros e praia. As histórias e os sentimentos que conectam as pessoas sempre me inspiram.</p>
+        </div>
+      </article>
+    </div>
+  </section>`;
+}
+
 function screenFim(){
   return `
   <section class="closing">
@@ -983,13 +1029,14 @@ function screenFim(){
       <a class="btn ghost" href="#/${state.path === "profissional" ? "estudante" : "profissional"}">${state.path === "profissional" ? "Ver o caminho dos estudantes" : "Ver o caminho dos profissionais"}</a>
       <a class="btn ghost" href="#/">Voltar ao início</a>
     </div>
-    <p class="credit">Site criado por <strong>Andy e Mariana</strong>.</p>
+    <p class="credit"><a href="#/creditos">Quem fez este site</a></p>
   </section>`;
 }
 
 /* ============ Roteador ============ */
 
-function render(){
+function render(keep){
+  keep = keep === "keep";
   const { parts } = route();
   const screen = document.getElementById("screen");
   let html = "";
@@ -1021,16 +1068,20 @@ function render(){
     html = screenApoio();
   } else if (parts[0] === "fim") {
     html = screenFim();
+  } else if (parts[0] === "creditos") {
+    html = screenCreditos();
   } else {
     html = screenHome();
   }
 
   screen.innerHTML = html;
   bindScreen(parts);
-  screen.classList.remove("in");
-  void screen.offsetWidth;
-  screen.classList.add("in");
-  window.scrollTo(0, 0);
+  if (!keep) {
+    screen.classList.remove("in");
+    void screen.offsetWidth;
+    screen.classList.add("in");
+    window.scrollTo(0, 0);
+  }
   document.getElementById("app").focus({ preventScroll: true });
 }
 
@@ -1052,7 +1103,9 @@ function bindScreen(parts){
       const key = parts[0];
       const n = parseInt(parts[2], 10);
       state.answers[key + "/" + n] = parseInt(btn.dataset.answer, 10);
-      render();
+      const y = window.scrollY;
+      render("keep");
+      window.scrollTo(0, y);
       const fb = document.querySelector("#situacao .feedback");
       if (fb) { fb.focus({ preventScroll: true }); fb.scrollIntoView({ block: "nearest", behavior: "smooth" }); }
     });
