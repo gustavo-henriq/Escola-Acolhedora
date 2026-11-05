@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escola que Acolhe</title>
+<meta name="description" content="Experiência educativa sobre respeito, convivência, empatia e pertencimento na escola.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Nunito+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#3B0764;
+    --ink-2:#5D5070;
+    --brand:#6A20A7;
+    --brand-dark:#4C1474;
+    --paper:#FAF9F5;
+    --surface:#FFFFFF;
+    --tint:#F5EDFA;
+    --tint-strong:#EBDCF6;
+    --line:#E6DCEE;
+    --line-strong:#D6C3E4;
+    --warm:#FBF1E5;
+    --page:1120px;
+    --read:68ch;
+    --radius:18px;
+    --pill:999px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font:400 16px/1.65 "Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.btn,.brand,.choice-name{font-family:Montserrat,system-ui,"Segoe UI",sans-serif}
+  h1{margin:0 0 14px;font-weight:800;font-size:clamp(1.85rem,4.2vw,3rem);line-height:1.1;letter-spacing:-.03em}
+  h2{margin:0 0 10px;font-weight:700;font-size:clamp(1.2rem,2.2vw,1.5rem);line-height:1.28;letter-spacing:-.015em}
+  h3{margin:0 0 6px;font-weight:700;font-size:1.05rem;line-height:1.3}
+  p{margin:0 0 14px}
+  a{color:inherit}
+  button{font:inherit;color:inherit}
+  :focus-visible{outline:3px solid var(--brand);outline-offset:3px;border-radius:6px}
+  .skip{position:absolute;left:-9999px;top:12px;background:#fff;padding:10px 16px;border-radius:8px;z-index:100}
+  .skip:focus{left:12px}
+  .wrap{width:min(var(--page),calc(100% - 36px));margin-inline:auto}
+  .site-header{background:var(--paper);border-bottom:1px solid var(--line)}
+  .site-header .wrap{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:10px 0}
+  .brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:.98rem;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+  .brand svg{width:30px;height:30px;flex:none}
+  .nav{display:flex;gap:6px;flex-wrap:wrap}
+  .nav a{font-size:.85rem;font-weight:600;text-decoration:none;color:var(--ink-2);padding:7px 12px;border-radius:var(--pill)}
+  .nav a:hover{background:var(--tint);color:var(--ink)}
+  .nav a[aria-current="page"]{background:var(--tint);color:var(--brand)}
+  .site-footer{margin-top:56px;border-top:1px solid var(--line);padding:22px 0 28px;color:var(--ink-2);font-size:.82rem}
+  main{padding:0 0 40px}
+  #app:focus{outline:none}
+  .screen{max-width:100%}
+  #screen.in{animation:screenIn .3s cubic-bezier(.22,.7,.3,1)}
+  @keyframes screenIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:11px 22px;border-radius:var(--pill);
+    border:1.5px solid transparent;background:var(--brand);color:#fff;font-weight:700;font-size:.92rem;text-decoration:none;cursor:pointer;
+    transition:background .18s,transform .18s,box-shadow .18s}
+  .btn:hover{background:var(--brand-dark)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;border-color:transparent;color:var(--ink);text-decoration:underline;text-underline-offset:4px;padding-inline:6px}
+  .btn.ghost:hover{color:var(--brand);background:transparent}
+  .btn.small{min-height:40px;padding:8px 16px;font-size:.86rem}
+  .back{display:flex;width:max-content;align-items:center;gap:7px;margin:20px 0 22px;font-size:.85rem;font-weight:600;color:var(--ink-2);text-decoration:none}
+  .back:hover{color:var(--brand)}
+    .lead{font-size:1.08rem;color:var(--ink-2);max-width:60ch}
+
+  /* Home */
+  body.home-route{background:#0B0618}
+  body.home-route .site-header,body.home-route .site-footer{display:none}
+  body.home-route main{padding:0}
+  body.home-route #screen{width:100%;max-width:none}
+  .home{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    padding:clamp(28px,6vh,64px) 20px;color:#FFF8F2;
+    background:
+      radial-gradient(ellipse 52% 38% at 24% 34%,rgba(126,42,178,.38),transparent 68%),
+      radial-gradient(ellipse 46% 34% at 78% 64%,rgba(38,74,178,.34),transparent 70%),
+      radial-gradient(ellipse 55% 42% at 58% 12%,rgba(92,30,142,.22),transparent 72%),
+      linear-gradient(150deg,#0A0516 0%,#190832 44%,#0A1733 100%)}
+  .home::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(ellipse at center,transparent 42%,rgba(4,2,12,.72) 100%)}
+  .home-sky{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .home-sky .star{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;
+    background:#fff;opacity:var(--o);box-shadow:0 0 5px rgba(255,255,255,.55);
+    animation:twinkle var(--tw) ease-in-out infinite;animation-delay:var(--delay)}
+  .home-sky .spark{position:absolute;left:var(--x);top:var(--y);width:11px;height:11px;opacity:.8;
+    background:linear-gradient(#fff,#fff) center/1px 11px no-repeat,linear-gradient(#fff,#fff) center/11px 1px no-repeat;
+    filter:drop-shadow(0 0 4px rgba(255,255,255,.85));animation:sparkle 7s ease-in-out infinite;animation-delay:var(--delay)}
+  .home-sky .meteor{position:absolute;left:var(--x);top:var(--y);width:var(--l);height:var(--w);border-radius:999px;
+    transform:rotate(147deg);transform-origin:100% 50%;opacity:0;
+    background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,190,255,.06) 24%,rgba(255,225,255,.55) 68%,#fff 100%);
+    box-shadow:0 0 4px rgba(255,130,245,.3);filter:drop-shadow(0 0 3px rgba(255,150,250,.35));
+    animation:meteor var(--d) linear infinite;animation-delay:var(--delay)}
+  .home-sky .meteor::after{content:"";position:absolute;right:-2px;top:50%;width:max(13px,calc(var(--w) * 4));height:max(13px,calc(var(--w) * 4));
+    transform:translateY(-50%);background:#fff;
+    clip-path:polygon(50% 0%,61.2% 34.6%,97.6% 34.6%,68.1% 55.9%,79.4% 90.5%,50% 69%,20.6% 90.5%,31.9% 55.9%,2.4% 34.6%,38.8% 34.6%);
+    box-shadow:0 0 8px 1px rgba(255,228,255,.95),0 0 20px 6px rgba(186,84,255,.5)}
+  @keyframes twinkle{0%,100%{opacity:var(--o);transform:scale(1)}50%{opacity:.3;transform:scale(.72)}}
+  @keyframes sparkle{0%,100%{opacity:.85;transform:scale(1)}50%{opacity:.25;transform:scale(.7)}}
+  @keyframes meteor{0%{opacity:0;transform:translate3d(0,0,0) rotate(147deg)}
+    3%{opacity:var(--o)}70%{opacity:var(--o)}
+    100%{opacity:0;transform:translate3d(-90vmax,60vmax,0) rotate(147deg)}}
+  .home-inner{position:relative;z-index:2;width:min(700px,100%);display:flex;flex-direction:column;align-items:center;text-align:center}
+  .home-brand{display:inline-flex;align-items:center;gap:8px;margin-bottom:clamp(22px,4vh,38px);
+    font:700 .72rem/1 Montserrat,system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E7D6F8}
+  .home-brand svg{width:17px;height:17px;flex:none}
+  .home h1{margin:0;max-width:22ch;font-size:clamp(1.7rem,4.2vw,2.75rem);line-height:1.12;letter-spacing:-.035em;color:#FFF8F2;
+    text-shadow:0 2px 26px rgba(6,2,14,.6),0 1px 4px rgba(6,2,14,.35)}
+  .home-sub{max-width:44ch;margin:18px 0 0;color:#D9C7EC;font-size:clamp(.93rem,1.6vw,1.04rem);line-height:1.6}
+  .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,4vw,32px);
+    width:min(540px,100%);margin-top:clamp(28px,5vh,44px)}
+  .choice{display:flex;flex-direction:column;align-items:center;gap:9px;text-decoration:none;color:#fff;border-radius:22px}
+  .choice-art{display:block;width:100%;aspect-ratio:360/210;border-radius:20px;overflow:hidden;background:#F5EDFA;
+    border:2px solid transparent;box-shadow:0 20px 45px -22px rgba(0,0,0,.85);
+    transition:transform .25s ease,border-color .2s ease,box-shadow .25s ease}
+  .choice-art svg{display:block;width:100%;height:100%}
+  .choice-art img{display:block;width:100%;height:100%;object-fit:cover}
+  .choice-name{font:700 clamp(.9rem,1.6vw,1.08rem)/1.25 Montserrat,system-ui,sans-serif;letter-spacing:-.01em;margin:0}
+  .choice-desc{max-width:23ch;color:#D6C4EC;font-size:clamp(.78rem,1.1vw,.82rem);line-height:1.4}
+  .choice:hover .choice-art,.choice:focus-visible .choice-art{border-color:#F3D27A;
+    box-shadow:0 26px 50px -22px rgba(0,0,0,.9),0 0 0 4px rgba(243,210,122,.12)}
+  .choice:focus-visible{outline:3px solid #F3D27A;outline-offset:6px}
+  .choice:hover .choice-name{color:#F3D27A}
+  .home-note{margin:clamp(24px,4vh,40px) 0 0;color:rgba(233,220,248,.78);font-size:.78rem;line-height:1.5}
+
+  /* Intro */
+  .intro{max-width:66ch;padding:8px 0 20px}
+  .intro .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+  .note{font-size:.82rem;color:var(--ink-2);margin-top:14px}
+
+  /* Progress */
+  .dots{display:flex;gap:8px;align-items:center;margin:0 0 24px;font-size:.8rem;font-weight:600;color:var(--ink-2)}
+  .dots span{margin-left:6px}
+  .dots i{display:block;width:10px;height:10px;border-radius:50%;border:1.5px solid var(--brand)}
+  .dots i.on{background:var(--brand)}
+
+  /* Theme list */
+  .feature{display:grid;gap:22px;margin:28px 0 8px;padding:20px;background:var(--surface);border:1px solid var(--line-strong);border-radius:26px}
+  .feature-art{border-radius:18px;overflow:hidden;aspect-ratio:360/210;background:var(--tint)}
+  .feature-art img{display:block;width:100%;height:100%;object-fit:cover}
+  .feature h2{font-size:1.5rem;margin:0 0 8px}
+  .feature p{color:var(--ink-2);margin:0 0 18px}
+  @media (min-width:760px){.feature{grid-template-columns:minmax(0,320px) 1fr;align-items:center;padding:24px;gap:32px}}
+  .themes{margin-top:8px}
+  .themes + .pager{border-top:0;margin-top:12px;padding-top:0}
+  .theme{display:grid;grid-template-columns:1fr auto;gap:8px 16px;align-items:center;padding:18px 4px;border-top:1px solid var(--line);cursor:pointer}
+  .theme-more{display:none;grid-column:1/-1;gap:14px;padding:6px 0 4px;justify-items:start}
+  .theme.open .theme-more{display:grid;animation:screenIn .25s ease-out}
+  .theme-art{width:min(320px,100%);aspect-ratio:360/210;border-radius:16px;overflow:hidden;background:var(--tint)}
+  .theme-art img{display:block;width:100%;height:100%;object-fit:cover}
+  .theme:last-child{border-bottom:1px solid var(--line)}
+  .theme:hover h2{color:var(--brand)}
+  .theme h2{margin:0 0 3px;font-size:1.05rem;letter-spacing:-.01em}
+  .theme p{margin:0;color:var(--ink-2);font-size:.95rem;line-height:1.5;max-width:56ch}
+  .theme .mark{font-size:.85rem;font-weight:700;color:var(--brand)}
+  .theme .mark.on{color:var(--ink-2);font-weight:500}
+
+  /* Pillar */
+  .pilar{display:grid;gap:30px;margin-top:28px}
+  .pilar-main{min-width:0}
+  .pilar-main .article{max-width:var(--read)}
+  .section-block{margin-top:26px}
+  .section-block:first-child{margin-top:0}
+  .section-block p{color:#453257}
+  .situation{margin-top:32px;padding-top:24px;border-top:1px solid var(--line);max-width:var(--read)}
+  .situation h2{font-size:1.2rem;margin-bottom:8px}
+  .situation .q{font-weight:700;margin:18px 0 10px;font-size:.98rem}
+  .options{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .option{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;width:100%;text-align:left;padding:11px 13px;
+    background:#fff;border:1.5px solid var(--line);border-radius:12px;font-size:.9rem;line-height:1.45;cursor:pointer;
+    transition:border-color .16s,background .16s}
+  .option:hover{border-color:var(--line-strong);background:#FDFBFE}
+  .option .k{font-weight:700;font-size:.78rem;color:var(--ink-2);padding-top:2px}
+  .option[aria-pressed="true"]{border-color:var(--brand);background:var(--tint);border-color:var(--brand)}
+  .option[aria-pressed="true"] .k{color:var(--brand)}
+  .feedback{margin-top:16px;padding-left:14px;border-left:3px solid var(--brand);font-size:.92rem;line-height:1.55}
+  .feedback p{margin:0 0 8px}
+  .feedback p:last-child{margin:0}
+  .reflect{margin-top:32px;padding-top:22px;border-top:1px solid var(--line);max-width:var(--read);font-weight:600;font-size:1.05rem;line-height:1.5}
+  .reflect p{margin:0 0 10px}
+  .pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}
+  .pager .spacer{flex:1}
+
+  /* Extra blocks */
+  .extra{margin-top:28px;padding:20px;border-radius:var(--radius);background:var(--warm);max-width:var(--read)}
+  .extra h2{font-size:1.1rem}
+  .extra .phrase{font-size:1.02rem;font-style:italic;margin:10px 0}
+  .extra ul{margin:0;padding-left:20px}
+  .extra li{margin-bottom:6px}
+  .phrase-box{margin-top:12px;display:grid;gap:10px}
+  .suggestion{margin-top:6px;padding:12px 14px;border-left:3px solid var(--brand);background:#fff;border-radius:0 10px 10px 0;font-size:.93rem}
+  .roles{display:grid;gap:10px;margin-top:14px}
+  .role{padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .role h3{margin:0 0 3px;font-size:.95rem}
+  .role p{margin:0;font-size:.88rem;color:var(--ink-2);line-height:1.5}
+  @media (min-width:700px){.roles{grid-template-columns:1fr 1fr}}
+
+  /* Quiz */
+  .quiz{max-width:720px;padding-top:6px}
+  .quiz-card{max-width:720px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .quiz-card h1{font-size:clamp(1.25rem,2.2vw,1.5rem);line-height:1.28;letter-spacing:-.015em;margin-bottom:18px}
+  .quiz-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .quiz-actions .btn.ghost{border-color:var(--line-strong);text-decoration:none;padding-inline:22px}
+  .quiz-actions .btn[aria-pressed="true"]{background:var(--brand-dark);border-color:var(--brand-dark);color:#fff}
+  .quiz-actions .btn.ghost[aria-pressed="true"]{background:var(--tint);border-color:var(--brand);color:var(--brand)}
+
+  /* Apoio e fim */
+  .readwrap{max-width:720px}
+  .readwrap h1{max-width:20ch}
+  .closing{max-width:760px;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,44px);margin-top:12px}
+  .closing h1{font-size:clamp(1.6rem,3vw,2.2rem);max-width:22ch}
+  .closing .highlight{margin:22px 0;padding-left:16px;border-left:3px solid var(--brand);font-weight:700;line-height:1.45}
+  .closing .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+  .closing .credit{margin:24px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:.8rem;color:var(--ink-2)}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  @media (prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
+    .home-sky .meteor{display:none}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#app">Ir para o conteúdo</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap">
+    <a class="brand" href="#/" aria-label="Escola que Acolhe — início">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="1" y="1" width="30" height="30" rx="9" fill="#F5EDFA" stroke="#E6DCEE"/>
+        <path d="M16 7.5 17.9 13.1 23.5 15 17.9 16.9 16 22.5 14.1 16.9 8.5 15 14.1 13.1Z" fill="#6A20A7"/>
+        <circle cx="23" cy="22.5" r="1.7" fill="#D9B241"/>
+      </svg>
+      <span>Escola que Acolhe</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Navegação principal" hidden>
+      <a href="#/" data-nav="home">Início</a>
+      <a href="#/estudante" data-nav="estudante">Estudantes</a>
+      <a href="#/profissional" data-nav="profissional">Profissionais</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app" class="screen" tabindex="-1"><div class="wrap" id="screen"></div></main>
+
+<footer class="site-footer">
+  <div class="wrap">Escola que Acolhe — recurso educativo. As respostas não são guardadas nem avaliadas.</div>
+</footer>
+
+<script>
+/* ============ Conteúdo ============ */
+
+const paths = {
+  estudante: {
+    kicker: "Caminho dos estudantes",
+    introTitle: "Vamos construir uma escola onde todo mundo possa se sentir parte?",
+    intro: [
+      "Na escola, encontramos pessoas diferentes de nós.",
+      "Conviver é aprender a respeitar essas diferenças, ouvir e perceber como nossas atitudes podem tornar o ambiente mais acolhedor.",
+      "Nesta jornada, vamos explorar situações do cotidiano e descobrir pequenas atitudes que fazem diferença."
+    ],
+    themesTitle: "Escolha um tema para explorar",
+    themesText: "Cada tema traz uma ideia, uma situação do cotidiano e uma reflexão. Explore todos ou comece pelo que mais chamar sua atenção.",
+    themes: [
+      "Reconhecer que cada pessoa possui características, experiências e formas de ser diferentes.",
+      "Refletir sobre situações de exclusão, violência e atitudes que contribuem para uma convivência respeitosa.",
+      "Aprender a expressar ideias, ouvir outras pessoas e lidar com diferenças de opinião.",
+      "Compreender diferentes perspectivas e reconhecer a importância de construir relações colaborativas.",
+      "Reconhecer que estudantes e profissionais contribuem para a vida escolar de diferentes maneiras."
+    ],
+    pillars: [
+      {
+        n: 1,
+        name: "Respeito às diferenças",
+        title: "Cada pessoa é única. E isso faz parte da convivência.",
+        lead: "Reconhecer as diferenças é o primeiro passo para uma convivência em que todo mundo pode participar.",
+        sections: [
+          { h: "O que significa respeitar as diferenças?", ps: [
+            "Cada pessoa tem sua história, opiniões e maneiras próprias de pensar, sentir e se expressar.",
+            "Respeitar as diferenças é reconhecer que essas particularidades fazem parte da convivência — ninguém precisa ser igual para merecer respeito.",
+            "Não precisamos concordar com tudo para tratar alguém com consideração."
+          ]},
+          { h: "Somos diferentes, mas temos algo em comum", ps: [
+            "Mesmo quando somos diferentes, compartilhamos algo importante: todas as pessoas merecem ser tratadas com dignidade.",
+            "Respeitar alguém significa considerar seus sentimentos, seus limites e seu direito de participar."
+          ]}
+        ],
+        situation: {
+          title: "Quando alguém é diferente de você",
+          text: "Durante uma atividade em grupo, uma pessoa apresenta uma ideia muito diferente da sua. Algumas pessoas começam a rir e fazem comentários sobre a proposta.",
+          question: "Como você poderia contribuir para que essa situação fosse mais respeitosa?",
+          options: [
+            "Continuar rindo junto com o grupo.",
+            "Escutar a ideia e considerar que diferentes perspectivas podem contribuir para a atividade.",
+            "Ignorar a pessoa e continuar o trabalho.",
+            "Dizer que todos precisam pensar da mesma maneira."
+          ],
+          feedback: [
+            "Ouvir uma ideia diferente não significa que precisamos concordar com ela.",
+            "Podemos expressar nossas opiniões e, ao mesmo tempo, reconhecer que outras pessoas também têm o direito de participar.",
+            "A convivência respeitosa começa quando deixamos de tratar as diferenças como motivo para excluir alguém."
+          ]
+        },
+        reflection: "Que diferença entre você e outra pessoa já contribuiu para que aprendesse algo novo?"
+      },
+      {
+        n: 2,
+        name: "Bullying e convivência",
+        title: "Conviver também é cuidar de como tratamos as pessoas.",
+        lead: "Conviver também é reparar no que acontece com quem está perto — e escolher não naturalizar a exclusão.",
+        sections: [
+          { h: "O que é bullying?", ps: [
+            "Bullying é uma forma de violência com agressões intencionais e repetidas, geralmente em uma relação desigual de poder.",
+            "Pode aparecer como apelidos ofensivos, humilhações, exclusões ou ameaças.",
+            "Nem todo conflito é bullying, mas toda situação de desrespeito merece cuidado."
+          ]},
+          { h: "A convivência é responsabilidade de todos", ps: [
+            "A maneira como tratamos as pessoas influencia o ambiente em que convivemos.",
+            "Quando presenciamos uma situação de violência ou exclusão, podemos contribuir para que ela não seja naturalizada.",
+            "Isso não significa que precisamos enfrentar tudo sozinhos."
+          ]}
+        ],
+        situation: {
+          title: "Quando alguém fica de fora",
+          text: "Você percebe que uma pessoa da turma costuma ser deixada de fora das atividades. Algumas pessoas fazem comentários sobre ela e outras apenas observam.",
+          question: "O que poderia contribuir para uma convivência mais respeitosa?",
+          options: [
+            "Participar das brincadeiras para não ficar de fora do grupo.",
+            "Demonstrar apoio à pessoa e procurar ajuda caso a situação continue.",
+            "Fingir que não percebeu.",
+            "Dizer que a pessoa precisa aprender a lidar com isso."
+          ],
+          feedback: [
+            "A exclusão e as humilhações não devem ser tratadas como algo normal.",
+            "Demonstrar apoio, não participar de agressões e procurar ajuda são possibilidades importantes.",
+            "Se uma situação de violência estiver acontecendo, a pessoa não precisa lidar com ela sozinha."
+          ]
+        },
+        support: {
+          title: "Onde procurar apoio?",
+          ps: [
+            "Se você estiver passando por uma situação de desrespeito, exclusão ou violência, procure um adulto ou profissional de confiança.",
+            "Pode ser um professor, alguém da coordenação, um familiar ou outra pessoa que possa ajudar.",
+            "Se você presenciar uma situação, também pode buscar apoio."
+          ]
+        },
+        reflection: "O que pode ajudar uma pessoa a se sentir mais segura e respeitada na escola?"
+      },
+      {
+        n: 3,
+        name: "Comunicação respeitosa",
+        title: "As palavras podem aproximar. A escuta também.",
+        lead: "As palavras aproximam ou afastam. A escuta faz parte da mesma conversa.",
+        sections: [
+          { h: "O que é comunicação respeitosa?", ps: [
+            "Comunicar-se não é apenas falar.",
+            "Também envolve ouvir, considerar o que outra pessoa está dizendo, expressar nossos sentimentos e respeitar diferentes opiniões.",
+            "Uma conversa respeitosa não exige que todos concordem. Ela permite que as pessoas se expressem sem serem humilhadas ou desconsideradas."
+          ]},
+          { h: "Discordar sem desrespeitar", ps: [
+            "É natural que existam opiniões diferentes.",
+            "Podemos explicar nosso ponto de vista, fazer perguntas e buscar compreender a perspectiva de outra pessoa.",
+            "O importante é não transformar uma discordância em uma oportunidade para ofender."
+          ]}
+        ],
+        extra: {
+          kind: "phrase",
+          title: "Transforme a frase",
+          instruction: "Leia a frase e pense em uma maneira de expressar a mesma ideia com mais respeito.",
+          original: "“Você nunca faz nada direito.”",
+          suggestion: "“Podemos conversar sobre o que aconteceu e pensar em como fazer de outra maneira?”"
+        },
+        situation: {
+          title: "Quando as opiniões são diferentes",
+          text: "Durante um trabalho em grupo, uma colega apresenta uma ideia diferente da sua. Você acredita que sua proposta é melhor.",
+          question: "Qual resposta pode ajudar a manter uma conversa respeitosa?",
+          options: [
+            "“Sua ideia não faz sentido.”",
+            "“Podemos conversar sobre as duas propostas e pensar no que funciona melhor?”",
+            "“Vamos fazer do meu jeito.”",
+            "“Você sempre tem ideias ruins.”"
+          ],
+          feedback: [
+            "Uma conversa respeitosa permite que diferentes pessoas participem.",
+            "Podemos discordar de uma proposta sem desvalorizar quem a apresentou.",
+            "A escuta ajuda a compreender outras perspectivas e, às vezes, a encontrar soluções que não teríamos pensado sozinhos."
+          ]
+        },
+        reflection: "Como você gostaria que as pessoas conversassem com você quando existe uma discordância?"
+      },
+      {
+        n: 4,
+        name: "Empatia e cooperação",
+        title: "Compreender o outro também é aprender.",
+        lead: "Compreender o outro não é adivinhar o que ele sente. É abrir espaço para a perspectiva dele.",
+        sections: [
+          { h: "O que é empatia?", ps: [
+            "Empatia é a disposição para tentar compreender o que outra pessoa pode estar sentindo ou vivendo.",
+            "Isso não significa que sabemos exatamente como ela se sente.",
+            "Podemos demonstrar empatia quando escutamos com atenção, respeitamos suas experiências e evitamos tirar conclusões sem compreender a situação."
+          ]},
+          { h: "O que é cooperação?", ps: [
+            "Cooperar significa contribuir com outras pessoas para construir algo em conjunto.",
+            "Na escola, a cooperação pode acontecer durante uma atividade em grupo, em uma conversa, na organização de um espaço ou em uma atitude de apoio.",
+            "Cada pessoa pode contribuir de uma maneira."
+          ]}
+        ],
+        extra: {
+          kind: "list",
+          title: "Pequenas atitudes, grandes acolhimentos",
+          items: [
+            "Convidar alguém para participar;",
+            "Escutar uma pessoa com atenção;",
+            "Oferecer ajuda sem impor;",
+            "Reconhecer uma contribuição;",
+            "Respeitar o tempo e os limites de outra pessoa."
+          ]
+        },
+        situation: {
+          title: "Quando alguém precisa participar",
+          text: "Durante uma atividade em grupo, um colega está tendo dificuldade para participar. Algumas pessoas começam a fazer tudo sem perguntar se ele gostaria de contribuir.",
+          question: "Como o grupo poderia agir de forma mais cooperativa?",
+          options: [
+            "Fazer toda a atividade sem considerar o colega.",
+            "Perguntar como ele gostaria de participar e ouvir suas ideias.",
+            "Dizer que ele não consegue realizar a atividade.",
+            "Deixar que outra pessoa decida tudo."
+          ],
+          feedback: [
+            "Cooperar não significa fazer tudo pela outra pessoa.",
+            "Também significa reconhecer sua autonomia, suas habilidades e suas possibilidades de participação.",
+            "Perguntar, escutar e construir uma solução em conjunto são atitudes que podem favorecer a cooperação."
+          ]
+        },
+        reflection: "Que atitude de cooperação você já recebeu de alguém e gostaria de compartilhar com outras pessoas?"
+      },
+      {
+        n: 5,
+        name: "A importância de cada pessoa na escola",
+        title: "A escola é feita por muitas pessoas.",
+        lead: "A escola funciona porque muitas pessoas a sustentam. Reconhecer isso muda a convivência.",
+        sections: [
+          { h: "Quem faz parte da escola?", ps: [
+            "Quando pensamos na escola, lembramos das salas de aula, dos professores e dos estudantes.",
+            "Mas profissionais da cozinha, limpeza, manutenção, secretaria, coordenação e direção também contribuem para o cotidiano.",
+            "Cada pessoa participa de uma maneira."
+          ]}
+        ],
+        extra: {
+          kind: "roles",
+          title: "Diferentes funções, uma comunidade",
+          items: [
+            { name: "Cozinha e alimentação", desc: "Contribuem para a preparação e organização das refeições e para o cuidado com a alimentação da comunidade escolar." },
+            { name: "Limpeza", desc: "Contribui para a organização, higiene e cuidado dos espaços utilizados pela comunidade." },
+            { name: "Manutenção", desc: "Contribui para o cuidado com os espaços, equipamentos e condições de funcionamento da escola." },
+            { name: "Secretaria", desc: "Contribui para a organização administrativa, comunicação e atendimento da comunidade escolar." },
+            { name: "Professores", desc: "Contribuem para os processos de ensino e aprendizagem e para a formação dos estudantes." },
+            { name: "Coordenação e direção", desc: "Contribuem para a organização, acompanhamento e desenvolvimento da vida escolar." },
+            { name: "Estudantes", desc: "Participam da comunidade escolar, dos processos de aprendizagem e da construção das relações cotidianas." }
+          ]
+        },
+        situation: {
+          title: "Quem faz parte da nossa comunidade?",
+          text: "Você percebe que algumas pessoas da escola realizam suas atividades diariamente, mas quase nunca são reconhecidas pelos estudantes.",
+          question: "Como podemos demonstrar respeito e reconhecimento?",
+          options: [
+            "Considerar que essas funções não fazem parte da convivência escolar.",
+            "Reconhecer que todas as pessoas contribuem para a comunidade e demonstrar consideração.",
+            "Demonstrar respeito apenas aos profissionais com quem temos contato nas aulas.",
+            "Acreditar que reconhecer alguém depende da função que ela exerce."
+          ],
+          feedback: [
+            "A escola é construída por muitas pessoas.",
+            "Reconhecer a contribuição de alguém não depende de seu cargo ou função.",
+            "Uma palavra respeitosa, um agradecimento ou uma atitude de consideração podem ajudar a fortalecer o sentimento de pertencimento."
+          ]
+        },
+        reflection: "Quem faz parte da sua escola e talvez não receba o reconhecimento que merece?"
+      }
+    ]
+  },
+  profissional: {
+    kicker: "Caminho dos profissionais",
+    introTitle: "Uma escola acolhedora também começa entre nós.",
+    intro: [
+      "A escola é uma comunidade construída por muitas pessoas.",
+      "Professores, cozinha, limpeza, manutenção, secretaria e direção — cada pessoa contribui à sua maneira e merece reconhecimento.",
+      "Esta jornada convida a refletir sobre nossas relações, comunicação e as atitudes que fortalecem o pertencimento."
+    ],
+    themesTitle: "Vamos refletir sobre nossas relações?",
+    themesText: "Cada tema traz situações do cotidiano escolar e um convite a refletir sobre respeito, comunicação, cooperação e reconhecimento.",
+    themes: [
+      "Como reconhecer diferentes experiências, perspectivas e formas de contribuir.",
+      "Como identificar situações de violência e contribuir para uma convivência respeitosa.",
+      "Como fortalecer o diálogo, a escuta e o respeito nas relações cotidianas.",
+      "Como reconhecer necessidades, compartilhar experiências e construir soluções coletivas.",
+      "Como valorizar as diferentes funções e fortalecer o pertencimento."
+    ],
+    pillars: [
+      {
+        n: 1,
+        name: "Respeito às diferenças",
+        title: "Cada pessoa contribui de uma maneira.",
+        lead: "Diferentes histórias, funções e formas de trabalhar convivem no mesmo espaço.",
+        sections: [
+          { h: "Respeitar diferentes experiências", ps: [
+            "A comunidade escolar reúne pessoas com diferentes histórias, experiências, opiniões, habilidades e formas de realizar suas atividades.",
+            "Essas diferenças fazem parte das relações cotidianas.",
+            "Respeitar alguém significa reconhecer sua dignidade, considerar suas perspectivas e evitar julgamentos baseados em sua função, experiência ou características pessoais."
+          ]},
+          { h: "Diferenças não precisam ser barreiras", ps: [
+            "Em uma equipe, nem sempre as pessoas terão as mesmas opiniões ou formas de trabalhar.",
+            "O diálogo pode contribuir para que essas diferenças sejam compreendidas e para que soluções sejam construídas de maneira respeitosa."
+          ]}
+        ],
+        situation: {
+          title: "Quando as perspectivas são diferentes",
+          text: "Durante uma conversa entre profissionais, uma pessoa apresenta uma proposta diferente da sua. Algumas pessoas desconsideram a ideia antes de ouvi-la completamente.",
+          question: "Como contribuir para uma relação mais respeitosa?",
+          options: [
+            "Desconsiderar a proposta porque foi apresentada por alguém com uma função diferente.",
+            "Ouvir a ideia e considerar seus possíveis aspectos positivos.",
+            "Evitar que a pessoa participe das próximas conversas.",
+            "Encerrar o diálogo sem considerar outras perspectivas."
+          ],
+          feedback: [
+            "Diferentes perspectivas podem contribuir para a compreensão de uma situação.",
+            "Ouvir não significa concordar automaticamente, mas permite que as pessoas participem e que as decisões sejam construídas com maior consideração."
+          ]
+        },
+        reflection: "Que experiência ou conhecimento de um colega já contribuiu para sua maneira de compreender uma situação?"
+      },
+      {
+        n: 2,
+        name: "Bullying e convivência",
+        title: "Uma convivência respeitosa também exige atenção.",
+        lead: "Atenção ao que acontece fora da sala também é cuidado com a convivência.",
+        sections: [
+          { h: "Compreender situações de violência", ps: [
+            "O bullying envolve agressões intencionais e repetidas, geralmente em uma relação desigual de poder.",
+            "No ambiente escolar, situações de humilhação, exclusão, ameaças ou comentários depreciativos podem afetar a convivência e o sentimento de segurança.",
+            "É importante compreender o contexto e não reduzir situações de violência a simples brincadeiras."
+          ]},
+          { h: "A importância de observar e acolher", ps: [
+            "Profissionais da escola podem perceber situações de desrespeito em diferentes espaços e momentos do cotidiano.",
+            "Acolher significa considerar o que está acontecendo, evitar expor as pessoas envolvidas e buscar apoio de acordo com os procedimentos da instituição.",
+            "Nenhum profissional precisa assumir sozinho a responsabilidade por situações complexas."
+          ]}
+        ],
+        situation: {
+          title: "Quando uma situação merece atenção",
+          text: "Você percebe que um estudante está sendo frequentemente alvo de comentários depreciativos ou excluído de atividades.",
+          question: "Qual atitude pode contribuir para que a situação seja tratada com responsabilidade?",
+          options: [
+            "Tratar a situação como uma brincadeira e não dar atenção.",
+            "Acolher o estudante, observar o contexto e buscar apoio conforme os procedimentos da escola.",
+            "Expor o estudante diante de outras pessoas para que explique o que aconteceu.",
+            "Acreditar que a situação será resolvida sem nenhuma intervenção."
+          ],
+          feedback: [
+            "Situações de violência e exclusão precisam ser consideradas com atenção.",
+            "Acolher, evitar exposição e buscar apoio institucional são atitudes importantes.",
+            "A atuação deve respeitar as responsabilidades de cada profissional e os procedimentos da escola."
+          ]
+        },
+        reflection: "Como podemos contribuir para que estudantes e colegas se sintam respeitados e seguros no ambiente escolar?"
+      },
+      {
+        n: 3,
+        name: "Comunicação respeitosa",
+        title: "O diálogo também constrói pertencimento.",
+        lead: "O diálogo entre setores também constrói pertencimento.",
+        sections: [
+          { h: "Comunicação e convivência", ps: [
+            "A comunicação está presente em todas as relações escolares.",
+            "Ela acontece em conversas, orientações, atendimentos, reuniões, atividades e interações cotidianas.",
+            "Uma comunicação respeitosa considera a maneira como as mensagens são expressas e como as outras pessoas são escutadas."
+          ]},
+          { h: "Escutar também é reconhecer", ps: [
+            "Quando escutamos alguém com atenção, demonstramos que sua participação importa.",
+            "A escuta pode contribuir para compreender necessidades, esclarecer situações e construir soluções.",
+            "Isso não significa que precisamos concordar com todas as opiniões, mas que podemos dialogar com respeito."
+          ]}
+        ],
+        extra: {
+          kind: "phrase",
+          title: "Transforme a frase",
+          instruction: "Leia a frase e pense em uma maneira de expressar a mesma ideia com mais respeito.",
+          original: "“Você não entende nada do que está acontecendo.”",
+          suggestion: "“Podemos conversar sobre o que aconteceu e compartilhar nossas perspectivas para compreender melhor a situação?”"
+        },
+        situation: {
+          title: "Quando uma opinião é desconsiderada",
+          text: "Durante uma conversa entre profissionais, uma pessoa tenta apresentar sua opinião, mas é interrompida repetidamente.",
+          question: "Como podemos contribuir para uma comunicação mais respeitosa?",
+          options: [
+            "Continuar a conversa sem considerar a participação da pessoa.",
+            "Criar espaço para que ela conclua sua fala e seja ouvida.",
+            "Considerar que algumas funções não precisam participar das decisões.",
+            "Encerrar a conversa sem ouvir outras perspectivas."
+          ],
+          feedback: [
+            "A comunicação respeitosa contribui para relações mais colaborativas.",
+            "Ouvir diferentes pessoas pode favorecer a compreensão de necessidades e experiências que nem sempre são percebidas."
+          ]
+        },
+        reflection: "Que atitude pode ajudar a fortalecer a escuta e o diálogo entre diferentes profissionais da escola?"
+      },
+      {
+        n: 4,
+        name: "Empatia e cooperação",
+        title: "Uma comunidade se fortalece quando construímos juntos.",
+        lead: "Nenhuma função sustenta a escola sozinha.",
+        sections: [
+          { h: "Empatia nas relações profissionais", ps: [
+            "A empatia envolve a disposição para compreender diferentes perspectivas e considerar o que outra pessoa pode estar vivendo.",
+            "No ambiente escolar, isso pode significar reconhecer que cada profissional possui responsabilidades, rotinas, desafios e experiências próprias.",
+            "Não precisamos conhecer completamente a experiência de alguém para tratá-la com consideração."
+          ]},
+          { h: "Cooperação entre diferentes funções", ps: [
+            "A escola envolve atividades que dependem da participação de diferentes pessoas.",
+            "A cooperação acontece quando reconhecemos essas contribuições, compartilhamos informações e buscamos soluções de maneira colaborativa.",
+            "Cooperar não significa assumir todas as responsabilidades, mas contribuir de acordo com nossas possibilidades e funções."
+          ]}
+        ],
+        situation: {
+          title: "Quando uma tarefa envolve diferentes pessoas",
+          text: "Uma atividade depende da colaboração de profissionais de diferentes setores. As pessoas possuem rotinas e responsabilidades distintas.",
+          question: "Como a cooperação pode contribuir para essa situação?",
+          options: [
+            "Considerar que apenas uma função deve resolver tudo.",
+            "Compartilhar informações, reconhecer as responsabilidades e buscar uma solução conjunta.",
+            "Desconsiderar as necessidades dos outros setores.",
+            "Evitar qualquer diálogo para não alterar a rotina."
+          ],
+          feedback: [
+            "A cooperação se fortalece quando reconhecemos as diferentes contribuições e buscamos compreender as necessidades envolvidas.",
+            "O trabalho coletivo não exige que todas as pessoas façam a mesma coisa. Ele permite que diferentes funções contribuam para objetivos compartilhados."
+          ]
+        },
+        reflection: "Que atitude de um colega ou de outro setor já contribuiu para o seu trabalho?"
+      },
+      {
+        n: 5,
+        name: "A importância de cada pessoa na escola",
+        title: "Cada pessoa faz parte da comunidade.",
+        lead: "Reconhecer o trabalho de quem está perto é uma forma concreta de acolhimento.",
+        sections: [
+          { h: "A escola é uma comunidade", ps: [
+            "A escola é construída por pessoas que participam de diferentes atividades e relações.",
+            "Algumas funções são mais visíveis no cotidiano, enquanto outras acontecem em espaços ou momentos que nem sempre recebem reconhecimento.",
+            "Todas fazem parte da vida escolar."
+          ]},
+          { h: "Reconhecer diferentes contribuições", ps: [
+            "O pertencimento pode ser fortalecido quando as pessoas percebem que suas contribuições são consideradas e respeitadas.",
+            "Reconhecer alguém não depende de seu cargo ou função.",
+            "Uma comunidade acolhedora valoriza a participação de diferentes pessoas e considera que cada uma possui uma maneira própria de contribuir."
+          ]}
+        ],
+        situation: {
+          title: "Quando uma contribuição passa despercebida",
+          text: "Um profissional realiza suas atividades diariamente, mas sua contribuição raramente é reconhecida pelos colegas ou pela comunidade escolar.",
+          question: "Como podemos contribuir para que essa pessoa se sinta respeitada e reconhecida?",
+          options: [
+            "Considerar que o reconhecimento depende exclusivamente do cargo.",
+            "Demonstrar consideração e reconhecer a contribuição da pessoa para a comunidade.",
+            "Acreditar que apenas as atividades pedagógicas são importantes.",
+            "Evitar qualquer interação com a pessoa."
+          ],
+          feedback: [
+            "O reconhecimento pode acontecer em pequenas atitudes.",
+            "Uma palavra respeitosa, uma escuta atenta ou um agradecimento podem demonstrar consideração.",
+            "O pertencimento se fortalece quando as pessoas percebem que fazem parte de uma comunidade que reconhece suas contribuições."
+          ]
+        },
+        reflection: "Como podemos fortalecer o reconhecimento e o pertencimento entre pessoas que exercem diferentes funções na escola?"
+      }
+    ]
+  }
+};
+
+const quizIntro = {
+  title: "Aprender também é construir vínculos.",
+  paragraphs: [
+    "Você já parou para pensar em quantas pessoas contribuem para aquilo que aprende?",
+    "Aprendemos com quem nos explica, observando, conversando ou recebendo apoio quando encontramos uma dificuldade.",
+    "Essa rede de apoio pode estar na escola — colegas e profissionais — ou fora dela, como familiares e amigos.",
+    "Cada pessoa contribui de uma maneira, e nós também podemos oferecer apoio. Vamos refletir sobre essas trocas?"
+  ]
+};
+
+const quizQuestions = [
+  "Você acredita que podemos aprender melhor quando compartilhamos conhecimentos?",
+  "Você considera que aprender com outras pessoas pode tornar uma experiência mais interessante?",
+  "Acredita que cada pessoa possui habilidades ou conhecimentos que podem contribuir para o aprendizado de outras?",
+  "Você já aprendeu algo com alguém sem que essa pessoa estivesse tentando ensinar?",
+  "Acredita que ensinar alguém também pode ser uma forma de aprender?",
+  "Você considera importante ter pessoas com quem possa compartilhar dúvidas, descobertas e aprendizados?"
+];
+
+/* ============ Estado ============ */
+
+const state = { visited: {}, answers: {}, phrase: {}, quiz: [], path: "estudante" };
+
+/* ============ Utilidades ============ */
+
+function esc(s){
+  return String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+}
+function route(){
+  const raw = location.hash.slice(1) || "/";
+  const [p, q] = raw.split("?");
+  return { parts: p.split("/").filter(Boolean), params: new URLSearchParams(q || "") };
+}
+function navFor(parts){
+  const cur = parts[0] || "home";
+  document.querySelectorAll("#nav a").forEach(a => {
+    if (a.dataset.nav === cur) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
+  document.getElementById("nav").hidden = !parts.length;
+}
+function dots(flags, label){
+  return `<div class="dots" >${flags.map(f => `<i class="${f ? "on" : ""}"></i>`).join("")}<span>${label}</span></div>`;
+}
+const themeArt = {
+  estudante: ["09_comunidade_escolar","02_equipe_escolar","05_escuta_e_comunicacao","08_profissional_orientando","03_estudo_colaborativo"],
+  profissional: ["06_cooperacao_em_projeto","02_equipe_escolar","05_escuta_e_comunicacao","07_estudante_e_cozinha","04_apoio_entre_estudantes"]
+};
+
+/* ============ Telas ============ */
+
+function homeSky(){
+  let seed = 29;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const stars = [];
+  for (let guard = 0; stars.length < 46 && guard < 500; guard++) {
+    const x = rnd() * 100;
+    const y = rnd() * 100;
+    if (x > 26 && x < 74 && y > 58 && y < 88) continue;
+    const s = (0.8 + rnd() * 1.7).toFixed(1);
+    const o = (0.32 + rnd() * 0.55).toFixed(2);
+    const tw = (4 + rnd() * 7).toFixed(1);
+    const delay = -(rnd() * 9).toFixed(1);
+    stars.push(`<span class="star" style="--x:${x.toFixed(2)}%;--y:${y.toFixed(2)}%;--s:${s}px;--o:${o};--tw:${tw}s;--delay:${delay}s"></span>`);
+  }
+  const sparks = [[18, 22, -2], [76, 17, -5], [64, 78, -3]]
+    .map(([x, y, d]) => `<span class="spark" style="--x:${x}%;--y:${y}%;--delay:${d}s"></span>`).join("");
+  const meteors = [
+    [7, 5, 250, 2.0, 38, .72],
+    [28, -7, 180, 1.6, 46, .6],
+    [55, 9, 300, 2.3, 42, .8],
+    [83, -3, 210, 1.8, 34, .65],
+    [13, 38, 165, 1.5, 50, .55],
+    [44, 47, 275, 2.1, 44, .7],
+    [72, 35, 195, 1.7, 40, .6],
+    [95, 57, 315, 2.4, 52, .82],
+    [24, 67, 225, 1.8, 36, .65]
+  ].map(([x, y, l, w, d, o], i) => {
+    const delay = -(d * (0.15 + (i % 5) * 0.12)).toFixed(1);
+    return `<span class="meteor" style="--x:${x}%;--y:${y}%;--l:${l}px;--w:${w}px;--d:${d}s;--delay:${delay}s;--o:${o}"></span>`;
+  }).join("");
+  return `<div class="home-sky" aria-hidden="true">${stars.join("")}${sparks}${meteors}</div>`;
+}
+
+function screenHome(){
+  return `
+  <section class="home" aria-labelledby="home-title">
+    ${homeSky()}
+    <div class="home-inner">
+      <span class="home-brand">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2 14.3 9.7 21.8 12 14.3 14.3 12 21.8 9.7 14.3 2.2 12 9.7 9.7Z" fill="#F3D27A"/></svg>
+        Escola que Acolhe
+      </span>
+      <h1 id="home-title">Uma escola acolhedora começa nas pequenas atitudes.</h1>
+      <p class="home-sub">Escolha por onde começar.</p>
+      <div class="choices">
+        <a class="choice" href="#/estudante">
+          <span class="choice-art"><img src="assets/01_estudantes_convivendo.png" alt=""></span>
+          <h2 class="choice-name">Estudante</h2>
+        </a>
+        <a class="choice" href="#/profissional">
+          <span class="choice-art"><img src="assets/04_apoio_entre_estudantes.png" alt=""></span>
+          <h2 class="choice-name">Profissional da escola</h2>
+        </a>
+      </div>
+      <p class="home-note">Experiência educativa. Sem avaliação, teste ou diagnóstico.</p>
+    </div>
+  </section>`;
+}
+
+function screenIntro(key){
+  const p = paths[key];
+  const outras = key === "estudante" ? "profissional" : "estudante";
+  return `
+  <a class="back" href="#/">← Início</a>
+  <h1 style="max-width:24ch">${p.introTitle}</h1>
+  <div class="article intro">${p.intro.slice(0, 2).map(t => `<p>${t}</p>`).join("")}</div>
+  <div class="actions">
+    <a class="btn" href="#/${key}/temas">Começar minha jornada</a>
+    <a class="btn ghost" href="#/${outras}">Ver o caminho dos ${outras === "estudante" ? "estudantes" : "profissionais"}</a>
+  </div>
+  `;
+}
+
+function screenThemes(key){
+  const p = paths[key];
+  const flags = p.pillars.map(x => !!state.visited[key + "/" + x.n]);
+  const nextIdx = flags.indexOf(false);
+  const feat = nextIdx === -1 ? 0 : nextIdx;
+  const f = p.pillars[feat];
+  const rest = p.pillars.filter((_, i) => i !== feat).map(x => `
+    <div class="theme" data-href="#/${key}/pilar/${x.n}" role="button" tabindex="0" aria-expanded="false">
+      <h2>${x.name}</h2>
+      <span class="mark ${flags[x.n - 1] ? "on" : ""}">${flags[x.n - 1] ? "Explorado" : "Explorar"}</span>
+      <div class="theme-more">
+        <div class="theme-art"><img src="assets/${themeArt[key][x.n - 1]}.png" alt=""></div>
+        <p>${p.themes[x.n - 1]}</p>
+        <span class="btn small">${flags[x.n - 1] ? "Reler" : "Começar"}</span>
+      </div>
+    </div>`).join("");
+  return `
+  <a class="back" href="#/${key}">← Voltar</a>
+  ${dots(flags, flags.filter(Boolean).length + " de 5 explorados")}
+  <h1 style="max-width:22ch">${p.themesTitle}</h1>
+  <div class="feature">
+    <div class="feature-art"><img src="assets/${themeArt[key][feat]}.png" alt=""></div>
+    <div>
+      <h2>${f.name}</h2>
+      <p>${p.themes[f.n - 1]}</p>
+      <a class="btn" href="#/${key}/pilar/${f.n}">${flags[feat] ? "Reler" : "Começar"}</a>
+    </div>
+  </div>
+  <div class="themes">${rest}</div>
+  <div class="pager"><span></span><a class="btn ghost" href="#/quiz">Ir para o quiz</a></div>`;
+}
+
+function renderSituation(key, pillar){
+  const s = pillar.situation;
+  const chosen = state.answers[key + "/" + pillar.n];
+  const letters = ["A", "B", "C", "D"];
+  return `
+    <div class="situation" id="situacao">
+      <h2>${s.title}</h2>
+      <p>${s.text}</p>
+      <p class="q">${s.question}</p>
+      <ul class="options">
+        ${s.options.map((opt, i) => `
+          <li><button class="option" type="button" aria-pressed="${chosen === i}" data-answer="${i}">
+            <span class="k">${letters[i]}</span><span>${esc(opt)}</span>
+          </button></li>`).join("")}
+      </ul>
+      <div aria-live="polite">${chosen === undefined ? "" : `
+        <div class="feedback" tabindex="-1">${s.feedback.slice(0, 2).map(t => `<p>${t}</p>`).join("")}</div>`}
+      </div>
+    </div>`;
+}
+
+function renderExtra(key, pillar){
+  if (!pillar.extra) return "";
+  const e = pillar.extra;
+  if (e.kind === "list") {
+    return `<div class="extra"><h2>${e.title}</h2><ul>${e.items.map(i => `<li>${i}</li>`).join("")}</ul></div>`;
+  }
+  if (e.kind === "roles") {
+    return `<div class="extra"><h2>${e.title}</h2><div class="roles">${e.items.map(r => `
+      <div class="role"><h3>${r.name}</h3><p>${r.desc}</p></div>`).join("")}</div></div>`;
+  }
+  return `
+  <div class="extra">
+    <h2>${e.title}</h2>
+    <p>${e.instruction}</p>
+    <p class="phrase">${e.original}</p>
+    <div class="phrase-box">
+      <div><button class="btn small" type="button" data-reveal>Ver uma reformulação</button></div>
+      <div class="suggestion" hidden>${e.suggestion}</div>
+    </div>
+  </div>`;
+}
+
+function screenPillar(key, n){
+  const p = paths[key];
+  const pillar = p.pillars[n - 1];
+  const prev = n > 1 ? `<a class="btn ghost" href="#/${key}/pilar/${n - 1}">← Tema anterior</a>` : `<a class="btn ghost" href="#/${key}/temas">← Temas</a>`;
+  const next = n < 5
+    ? `<a class="btn" href="#/${key}/pilar/${n + 1}" data-visit="${n}">Próximo tema</a>`
+    : `<a class="btn" href="#/quiz" data-visit="${n}">Ir para o quiz</a>`;
+  return `
+  <a class="back" href="#/${key}/temas">← Temas</a>
+  ${dots(p.pillars.map(x => x.n <= n), "Tema " + n + " de 5")}
+  <h1 style="max-width:26ch">${pillar.title}</h1>
+
+  <div class="pilar">
+    <div class="pilar-main">
+      <div class="article">
+        ${pillar.sections.map(s => `<div class="section-block"><h2>${s.h}</h2>${s.ps.slice(0, 2).map(t => `<p>${t}</p>`).join("")}</div>`).join("")}
+        ${renderExtra(key, pillar)}
+      </div>
+      ${pillar.support ? `<div class="extra" style="background:var(--tint)"><h2>${pillar.support.title}</h2>${pillar.support.ps.slice(0, 2).map(t => `<p>${t}</p>`).join("")}</div>` : ""}
+      ${renderSituation(key, pillar)}
+      <div class="reflect"><p>${pillar.reflection}</p></div>
+    </div>
+    <div class="pager">
+      ${prev}
+      <span class="spacer"></span>
+      ${next}
+    </div>
+  </div>`;
+}
+
+function screenQuizIntro(){
+  return `
+  <a class="back" href="#/${state.path}/temas">← Temas</a>
+  <h1 style="max-width:24ch">${quizIntro.title}</h1>
+  <div class="article intro">${quizIntro.paragraphs.slice(0, 2).map(t => `<p>${t}</p>`).join("")}</div>
+  <div class="actions">
+    <a class="btn" href="#/quiz/1">Começar</a>
+  </div>`;
+}
+
+function screenQuizQuestion(n){
+  const q = quizQuestions[n - 1];
+  const chosen = state.quiz[n - 1];
+  return `
+  <a class="back" href="#/${state.path}/temas">← Temas</a>
+  <div class="quiz">
+    ${dots(quizQuestions.map((_, i) => i < n - 1), "Pergunta " + n + " de " + quizQuestions.length)}
+    <div class="quiz-card">
+      <h1>${q}</h1>
+      <div class="quiz-actions">
+        <button class="btn" type="button" data-quiz="sim" aria-pressed="${chosen === "sim"}">Sim</button>
+        <button class="btn ghost" type="button" data-quiz="nao" aria-pressed="${chosen === "nao"}">Não</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function screenQuizEnd(){
+  return `
+  <a class="back" href="#/quiz">← Quiz</a>
+  <h1 style="max-width:24ch">Nossa rede de apoio também é feita de aprendizados.</h1>
+  <div class="readwrap article">
+    <p>Suas respostas são um convite para pensar sobre as relações que fazem parte da sua jornada.</p>
+    <p>Aprender não acontece apenas em livros ou salas de aula. Também acontece nas conversas, nas trocas, nas experiências e na convivência.</p>
+    <p>Mesmo quando aprendemos algo sozinhos, outras pessoas podem ter contribuído para esse conhecimento de maneiras que nem sempre percebemos.</p>
+  </div>
+  <div class="pager" style="max-width:720px"><a class="btn ghost" href="#/quiz">← Voltar ao quiz</a><span class="spacer"></span><a class="btn" href="#/apoio">Continuar</a></div>`;
+}
+
+function screenApoio(){
+  const prof = state.path === "profissional";
+  const p1 = prof ? [
+    "Pense em alguém da comunidade escolar que já contribuiu para o seu trabalho ou aprendizado.",
+    "O que essa pessoa compartilhou com você?"
+  ] : [
+    "Pense em alguém que já ajudou você a aprender algo.",
+    "O que essa pessoa compartilhou com você?"
+  ];
+  const p2 = prof
+    ? "E que conhecimento, experiência ou atitude sua pode contribuir para o desenvolvimento de outra pessoa?"
+    : "E existe algo que você poderia compartilhar com outra pessoa?";
+  return `
+  <a class="back" href="#/quiz/devolutiva">← Devolutiva</a>
+  <h1 style="max-width:20ch">Quem faz parte da sua rede de apoio?</h1>
+  <div class="reflect" style="max-width:720px">${p1.map(t => `<p>${t}</p>`).join("")}</div>
+  <div class="reflect" style="max-width:720px"><p>${p2}</p></div>
+  <div class="pager" style="max-width:720px"><a class="btn ghost" href="#/quiz/devolutiva">← Voltar</a><span class="spacer"></span><a class="btn" href="#/fim">Continuar</a></div>`;
+}
+
+function screenFim(){
+  return `
+  <section class="closing">
+    <h1>Uma escola que acolhe também é uma escola que aprende junto.</h1>
+    <p>Quando compartilhamos conhecimentos, respeitamos diferenças e reconhecemos quem está ao nosso lado, fortalecemos a comunidade escolar.</p>
+    <p class="highlight">Na escola, ninguém é apenas parte do cenário. Cada pessoa faz parte da comunidade.</p>
+    <div class="actions">
+      <a class="btn" href="#/${state.path}/temas">Explorar outro tema</a>
+      <a class="btn ghost" href="#/${state.path === "profissional" ? "estudante" : "profissional"}">${state.path === "profissional" ? "Ver o caminho dos estudantes" : "Ver o caminho dos profissionais"}</a>
+      <a class="btn ghost" href="#/">Voltar ao início</a>
+    </div>
+    <p class="credit">Site criado por <strong>Andy e Mariana</strong>.</p>
+  </section>`;
+}
+
+/* ============ Roteador ============ */
+
+function render(){
+  const { parts } = route();
+  const screen = document.getElementById("screen");
+  let html = "";
+
+  document.body.classList.toggle("home-route", parts.length === 0);
+  document.getElementById("nav").hidden = !parts.length;
+  navFor(parts);
+
+  if (parts.length === 0) {
+    html = screenHome();
+  } else if (parts[0] === "estudante" || parts[0] === "profissional") {
+    state.path = parts[0];
+    if (parts.length === 1) html = screenIntro(parts[0]);
+    else if (parts[1] === "temas") html = screenThemes(parts[0]);
+    else if (parts[1] === "pilar") {
+      const n = parseInt(parts[2] || "1", 10);
+      if (n < 1 || n > 5) { location.hash = "#/" + parts[0] + "/temas"; return; }
+      state.visited[parts[0] + "/" + n] = true;
+      html = screenPillar(parts[0], n);
+    } else html = screenIntro(parts[0]);
+  } else if (parts[0] === "quiz") {
+    if (parts[1] === "devolutiva") html = screenQuizEnd();
+    else if (parts[1]) {
+      const n = parseInt(parts[1], 10);
+      if (n < 1 || n > quizQuestions.length) { location.hash = "#/quiz/devolutiva"; return; }
+      html = screenQuizQuestion(n);
+    } else html = screenQuizIntro();
+  } else if (parts[0] === "apoio") {
+    html = screenApoio();
+  } else if (parts[0] === "fim") {
+    html = screenFim();
+  } else {
+    html = screenHome();
+  }
+
+  screen.innerHTML = html;
+  bindScreen(parts);
+  screen.classList.remove("in");
+  void screen.offsetWidth;
+  screen.classList.add("in");
+  window.scrollTo(0, 0);
+  document.getElementById("app").focus({ preventScroll: true });
+}
+
+function bindScreen(parts){
+  const screen = document.getElementById("screen");
+
+  screen.querySelectorAll(".theme[data-href]").forEach(row => {
+    const act = () => {
+      if (row.classList.contains("open")) { location.hash = row.dataset.href; return; }
+      screen.querySelectorAll(".theme.open").forEach(o => { o.classList.remove("open"); o.setAttribute("aria-expanded", "false"); });
+      row.classList.add("open"); row.setAttribute("aria-expanded", "true");
+    };
+    row.addEventListener("click", act);
+    row.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); act(); } });
+  });
+
+  screen.querySelectorAll("[data-answer]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const key = parts[0];
+      const n = parseInt(parts[2], 10);
+      state.answers[key + "/" + n] = parseInt(btn.dataset.answer, 10);
+      render();
+      const fb = document.querySelector("#situacao .feedback");
+      if (fb) { fb.focus({ preventScroll: true }); fb.scrollIntoView({ block: "nearest", behavior: "smooth" }); }
+    });
+  });
+
+  screen.querySelectorAll("[data-reveal]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const box = btn.parentElement.parentElement.querySelector(".suggestion");
+      if (box) box.hidden = !box.hidden;
+    });
+  });
+
+  screen.querySelectorAll("[data-visit]").forEach(link => {
+    link.addEventListener("click", () => {
+      const key = parts[0];
+      state.visited[key + "/" + link.dataset.visit] = true;
+    });
+  });
+
+  screen.querySelectorAll("[data-quiz]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const n = parseInt(parts[1], 10);
+      state.quiz[n - 1] = btn.dataset.quiz;
+      location.hash = n >= quizQuestions.length ? "#/quiz/devolutiva" : "#/quiz/" + (n + 1);
+    });
+  });
+}
+
+window.addEventListener("hashchange", render);
+render();
+</script>
+</body>
+</html>
